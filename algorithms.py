@@ -24,13 +24,11 @@ def brute_force(G: nx.Graph):
         print(
             "ADVERTENCIA: Hay mas de 10 nodos, el algoritmo puede demorarse mucho tiempo..."
         )
-        input("Presiona enter para continuar.")
 
     for p in permutations(nodes):
         if enumeration[p[0]] > enumeration[p[-1]]:
             current_cycle = [start_node] + list(p) + [start_node]
             current_cost = calc_cycle_cost(G, current_cycle)
-            print(f"costo de {current_cycle}: {current_cost}")
             if current_cost < min_cost:
                 min_cost = current_cost
                 best_cycle = current_cycle
@@ -139,9 +137,9 @@ def two_opt(G, cycle):
     improvement = True
     while improvement:
         improvement = False
-        for i in range(1, n - 2):
-            for j in range(i + 1, n - 1):
-                new_cycle = cycle[:i] + cycle[i:j+1][::-1] + cycle[j+1:]
+        for i in range(1, n - 1):
+            for j in range(i + 1, n):
+                new_cycle = cycle[:i] + cycle[i : j + 1][::-1] + cycle[j + 1 :]
                 if calc_cycle_cost(G, new_cycle) < calc_cycle_cost(G, cycle):
                     improvement = True
                     cycle = new_cycle
